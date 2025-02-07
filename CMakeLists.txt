@@ -36,13 +36,18 @@ target_link_libraries(uart_usb
     pico_stdlib 
     hardware_uart
     hardware_i2c
-    hardware_pio)
+    hardware_pio
+    hardware_clocks)
 
 #    file(MAKE_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/generated)
 #    pico_generate_pio_header(uart_usb ${CMAKE_CURRENT_LIST_DIR}/uart_usb.pio OUTPUT_DIR ${CMAKE_CURRENT_LIST_DIR}/generated)
 #    target_sources(uart_usb PRIVATE uart_usb.c)
 #    target_link_libraries(uart_usb PRIVATE pico_stdlib hardware_pio)
 
+############################################
+# Adiciona o arquivo PIO ao projeto
+pico_generate_pio_header(uart_usb ${CMAKE_CURRENT_LIST_DIR}/uart_usb.pio)
+############################################
 
 target_include_directories(uart_usb PRIVATE
 ${CMAKE_CURRENT_LIST_DIR})
