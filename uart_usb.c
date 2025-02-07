@@ -15,8 +15,8 @@
 #define IS_RGBW false // Define se os LEDs têm um canal branco (RGBW) ou apenas RGB
 #define NUM_PIXELS 25
 #define I2C_PORT i2c1
-#define I2C_SDA 14
-#define I2C_SCL 15
+#define I2C_SDA 14    //Comunicar com SDA do I2C
+#define I2C_SCL 15    //Comunicar com SCL do I2C
 #define endereco 0x3C
 
 bool numeros[10][NUM_PIXELS] = 
@@ -67,7 +67,7 @@ void set_leds_from_buffer() { //Envia os dados do buffer para a matriz WS2812
 }
 
 
-static volatile uint32_t last_time = 0;  // Para debouncing, armazena o tempo do último evento
+static volatile uint32_t last_time = 0; // Para debouncing, armazena o tempo do último evento
 static void gpio_irq_handler(uint gpio, uint32_t events); //Prototipação da função de interrupção
 
 ssd1306_t ssd; // variável global do display
@@ -76,18 +76,17 @@ int main()
 {
     stdio_init_all(); // Inicializa comunicação USB CDC para monitor serial
 
-    // Configura os pinos dos LEDs como saída
-    gpio_init(led_pin_g);
-    gpio_set_dir(led_pin_g, GPIO_OUT);
-    gpio_put(led_pin_g, 0); // Inicialmente desligado
-    gpio_init(led_pin_b);
+    gpio_init(led_pin_g);              //inicializa o led verde como saída e inicialmente desligado
+    gpio_set_dir(led_pin_g, GPIO_OUT);  
+    gpio_put(led_pin_g, 0);            
+    gpio_init(led_pin_b);              //inicializa o led azul como saída e inicialmente desligado
     gpio_set_dir(led_pin_b, GPIO_OUT);
-    gpio_put(led_pin_b, 0); // Inicialmente desligado
+    gpio_put(led_pin_b, 0); 
 
-    gpio_init(botao_A);             //inicializa o botão A
-    gpio_set_dir(botao_A, GPIO_IN); //configura como entrada
-    gpio_pull_up(botao_A);          //pull up ativado
-    gpio_init(botao_B);             //inicializa o botão B
+    gpio_init(botao_A);                //inicializa o botão A, configura como entrada e pull up ativado
+    gpio_set_dir(botao_A, GPIO_IN); 
+    gpio_pull_up(botao_A);          
+    gpio_init(botao_B);                //inicializa o botão B, configura como entrada e pull up ativado
     gpio_set_dir(botao_B, GPIO_IN);
     gpio_pull_up(botao_B);
 
@@ -130,7 +129,7 @@ int main()
             printf("Recebido: '%c'\n", c);
             ssd1306_fill(&ssd, false);  // Limpa o display
 
-            // Verifica se o caractere é um número
+            // Lógica para letras minúscula.
             if (c >= '0' && c <= '9') {
                 numero_atual = c - '0';  // Converte de char para int (ex: '0' -> 0, '1' -> 1, etc.)
                 update_led_buffer();      // Atualiza o buffer da matriz de LEDs com o número
@@ -141,33 +140,21 @@ int main()
                 ssd1306_draw_string(&ssd, texto, 40, 25); // Desenha a string no display
                 ssd1306_send_data(&ssd);   // Atualiza o display OLED
             } 
-            // Verifica se o caractere é uma letra
             else if (c >= 'a' && c <= 'z') {
-                // Adicione aqui a lógica para exibir letras, se necessário
+                // Lógica para letras minúscula.
                 char texto[2] = {c, '\0'};
                 ssd1306_draw_string(&ssd, texto, 40, 25);
                 ssd1306_send_data(&ssd);
             } 
             else if (c >= 'A' && c <= 'Z') {
-                // Lógica para letras maiúsculas, se necessário
+                // Lógica para letras maiúsculas.
                 char texto[2] = {c, '\0'};
                 ssd1306_draw_string(&ssd, texto, 40, 25);
                 ssd1306_send_data(&ssd);
             }
-////////////////////////////////////////////////////////////////////////////////////////
-              else if (c >= 'a' && c <= 'z') {
-                uint8_t index = c - 'a';  // Encontrar o índice da letra
-                uint8_t *caracter = &font[index * 8];  // Cada caractere ocupa 8 bytes
-
-                // Agora desenha o caractere na tela
-                ssd1306_draw_bitmap(&ssd, 40, 25, caracter, 8, 8);  // Aqui você pode usar a função `ssd1306_draw_bitmap` para desenhar a letra
-                ssd1306_send_data(&ssd);  // Atualiza o display
-              }
-////////////////////////////////////////////////////////////////////////////////////////
             else {
-                // Caso o caractere não seja nem número nem letra
-                printf("Caractere inválido\n");
-            }
+                printf("Caractere inválido\n"); // Caso o caractere não seja nem número nem letra
+                }
         }
     }
     sleep_ms(40);  // Evita que o loop rode muito rápido
@@ -199,7 +186,7 @@ void gpio_irq_handler(uint gpio, uint32_t events)
                 ssd1306_draw_string(&ssd, "LED VERDE ON", 20, 25);
            }
         } 
-        else if (gpio == botao_B) { // Muda o estado do led verde, com uma mensagem no display e no Serial Monitor
+        else if(gpio == botao_B) {//Muda o estado do led azul, com uma mensagem no display e no Serial Monitor
             gpio_put(led_pin_b, !gpio_get(led_pin_b));
             
             if(!gpio_get(led_pin_b)){
@@ -210,7 +197,6 @@ void gpio_irq_handler(uint gpio, uint32_t events)
                 ssd1306_draw_string(&ssd, "LED AZUL ON", 20, 25);
            }
         }
-
         ssd1306_send_data(&ssd); // Atualiza o display
     }
 }
