@@ -10,13 +10,13 @@ Este projeto tem como objetivo explorar e aplicar os conceitos de comunicação 
 
 **Objetivos**
 
-Compreender e implementar comunicação serial (UART e I2C).
+* Compreender e implementar comunicação serial (UART e I2C).
 
-Manipular LEDs comuns e LEDs endereçáveis WS2812.
+* Manipular LEDs comuns e LEDs endereçáveis WS2812.
 
-Implementar o uso de botões com interrupções e debounce via software.
+* Implementar o uso de botões com interrupções e debounce via software.
 
-Desenvolver um projeto funcional integrando hardware e software.
+* Desenvolver um projeto funcional integrando hardware e software.
 
 **Componentes Utilizados**
 
