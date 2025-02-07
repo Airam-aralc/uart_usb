@@ -24,7 +24,6 @@ include(pico_sdk_import.cmake)
 project(uart_usb C CXX ASM)
 pico_sdk_init()
 add_executable(uart_usb uart_usb.c inc/ssd1306.c)
-#add_executable(uart_usb uart_usb.c )
 
 pico_set_program_name(uart_usb "uart_usb")
 pico_set_program_version(uart_usb "0.1")
@@ -39,15 +38,8 @@ target_link_libraries(uart_usb
     hardware_pio
     hardware_clocks)
 
-#    file(MAKE_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/generated)
-#    pico_generate_pio_header(uart_usb ${CMAKE_CURRENT_LIST_DIR}/uart_usb.pio OUTPUT_DIR ${CMAKE_CURRENT_LIST_DIR}/generated)
-#    target_sources(uart_usb PRIVATE uart_usb.c)
-#    target_link_libraries(uart_usb PRIVATE pico_stdlib hardware_pio)
-
-############################################
 # Adiciona o arquivo PIO ao projeto
 pico_generate_pio_header(uart_usb ${CMAKE_CURRENT_LIST_DIR}/uart_usb.pio)
-############################################
 
 target_include_directories(uart_usb PRIVATE
 ${CMAKE_CURRENT_LIST_DIR})

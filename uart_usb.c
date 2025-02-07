@@ -120,7 +120,7 @@ int main()
 
     bool cor = true;
 
-    printf("RP2040 inicializado. Envie alguma letra de a-z ou algum numero de 0-9.\n");
+    printf("Envie alguma letra de a-z, de A-Z, algum numero de 0-9 ou clique nos botões\n");
 
   while (true) {
     if (stdio_usb_connected()) {
@@ -180,10 +180,10 @@ void gpio_irq_handler(uint gpio, uint32_t events)
            
            if(!gpio_get(led_pin_g)){
                 printf("LED verde foi desligado!\n");
-                ssd1306_draw_string(&ssd, "LED VERDE OFF", 20, 25);
+                ssd1306_draw_string(&ssd, "LED verde off", 20, 25);
            } else{
                 printf("LED verde foi ligado!\n");
-                ssd1306_draw_string(&ssd, "LED VERDE ON", 20, 25);
+                ssd1306_draw_string(&ssd, "LED verde on", 20, 25);
            }
         } 
         else if(gpio == botao_B) {//Muda o estado do led azul, com uma mensagem no display e no Serial Monitor
@@ -191,10 +191,10 @@ void gpio_irq_handler(uint gpio, uint32_t events)
             
             if(!gpio_get(led_pin_b)){
                 printf("LED azul foi desligado!\n");
-                ssd1306_draw_string(&ssd, "LED AZUL OFF", 20, 25);
+                ssd1306_draw_string(&ssd, "LED azul off", 20, 25);
            } else{
                 printf("LED azul foi ligado!\n");
-                ssd1306_draw_string(&ssd, "LED AZUL ON", 20, 25);
+                ssd1306_draw_string(&ssd, "LED azul on", 20, 25);
            }
         }
         ssd1306_send_data(&ssd); // Atualiza o display
