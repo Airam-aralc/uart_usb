@@ -2,7 +2,7 @@
 
 # Projeto de Comunicação Serial no RP2040 com BitDogLab
 
-video desmonstrativo da atividade:
+video desmonstrativo da atividade: https://www.dropbox.com/scl/fi/qxn3bid9k4cmur3ok9fsq/atividade-04_02.mp4?rlkey=1u7ey7ahqjbnlkpqqf39za530&st=pjonoh0e&dl=0
 
 **Descrição**
 
